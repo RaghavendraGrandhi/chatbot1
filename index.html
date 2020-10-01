@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<h1>Flask Chat bot</h1>
+<div>
+<div id = "chatbox">
+<pclass = "bot Text"><span> Hi! I am your Chatterbot.</span>
+</div>
+<div id = "user Input">
+<input id = "text Input" type = "text" name = "msg" placeholder = "msg">
+<input id = "button Input" type = "submit" value = "Send">
+</div>
+<script>
+function getBotResponse(){
+var rawText = $ ("text Input").val();
+var userHtml = '<p class = "user Text"><span>'+rawText+'</span></p>';
+$("#textInput").val("");
+$("#chatbox").append(userHtml);
+document.getElementByID('userInput').scrollIntoView({block:'start',behaviour:'smooth'})
+$.get("/get", {msg:rawText}).done(function(data){
+var botHtml = '<p class = "botText"><span>'+data+'</span></p>';
+$("#chatbox").append(botHtml);
+document.getElementById('userInput').scrollIntoView({block:'start',behaviour:'smooth'})
+});
+}
+$("#textInput").keypress(function (e){
+if(e.which == 13){
+getBotResponse();
+}
+});
+$("#buttonInput").click(function(){
+getBotResponse();
+})
+</script>
+</div>
+</body>
+</html> 
